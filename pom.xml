@@ -30,6 +30,8 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 		<spock.version>1.1-groovy-2.4</spock.version>
+		<swagge-jersey2.version>1.5.20</swagge-jersey2.version>
+		<swagge-ui.version>3.17.1</swagge-ui.version>
 	</properties>
 
 	<dependencies>
@@ -73,6 +75,16 @@
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.swagger</groupId>
+			<artifactId>swagger-jersey2-jaxrs</artifactId>
+			<version>${swagge-jersey2.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>swagger-ui</artifactId>
+			<version>${swagge-ui.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.h2database</groupId>

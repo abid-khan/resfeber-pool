@@ -9,7 +9,8 @@ public class UserNotFoundException extends RuntimeException {
         this.code = code;
     }
 
-    public UserNotFoundException(String message, Throwable cause) {
+    public UserNotFoundException(String code, String message, Throwable cause) {
         super(message, cause);
+        this.code  = code;
     }
 }

@@ -28,5 +28,8 @@ public class JerseyConfig extends ResourceConfig {
         register(VehicleServiceExceptionMapper.class);
         //Package
         packages("com.resfeber.pool");
+        //Swagger
+        register(io.swagger.jaxrs.listing.ApiListingResource.class);
+        register(io.swagger.jaxrs.listing.SwaggerSerializers.class);
     }
 }

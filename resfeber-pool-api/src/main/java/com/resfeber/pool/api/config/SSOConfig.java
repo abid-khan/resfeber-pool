@@ -58,7 +58,7 @@ public class SSOConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
-                .authorizeRequests().antMatchers("/", "/login","/api/**").permitAll()
+                .authorizeRequests().antMatchers("/**", "/login","/api/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class);

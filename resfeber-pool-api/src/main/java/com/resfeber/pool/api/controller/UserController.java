@@ -30,10 +30,15 @@ import com.resfeber.pool.service.UserService;
 import com.resfeber.pool.service.bean.PoolBean;
 import com.resfeber.pool.service.bean.PoolerBean;
 import com.resfeber.pool.service.bean.UserBean;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 @Slf4j
 @Component
 @Path("/users")
+@Api(value = "UserController", produces = "application/json")
 public class UserController {
     @Autowired
     private UserService userService;
@@ -48,6 +53,10 @@ public class UserController {
     @Autowired
     private PoolerWSMapper poolerWSMapper;
 
+    @ApiOperation(value = "Update user", response = ResponseWS.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 202, message = "ACCEPTED", response = UserWS.class)
+    })
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
