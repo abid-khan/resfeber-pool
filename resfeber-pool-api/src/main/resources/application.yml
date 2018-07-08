@@ -1,0 +1,24 @@
+spring:
+# Specify the DBMS
+  jpa:
+    database: MYSQL
+    show-sql: true
+    hibernate.ddl-auto: update
+    hibernate.dialect:  org.hibernate.dialect.MySQL5Dialect
+    hibernate.naming_strategy:  org.hibernate.cfg.ImprovedNamingStrategy
+    properties.jadira.usertype.autoRegisterUserTypes:  true
+
+  jackson:
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false
+
+
+logging:
+  level:
+    org:
+      hibernate:
+        type: TRACE
+
+
+
+
