@@ -17,8 +17,8 @@ public class VehicleBean extends BaseBean {
     private Integer capacity;
 
     @Builder
-    private VehicleBean(Long id, String uuid, String number, String brand, String description, VehicleType type, UserBean user, Integer capacity) {
-        super(id, uuid);
+    private VehicleBean(Long id, String uuid, String status, String number, String brand, String description, VehicleType type, UserBean user, Integer capacity) {
+        super(id, uuid, status);
         this.number = number;
         this.brand = brand;
         this.description = description;

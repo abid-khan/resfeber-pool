@@ -40,7 +40,7 @@ public class PoolerServiceImpl implements PoolerService {
     @Transactional
     @Override
     public PoolerBean book(PoolerBean poolerBean) {
-        Pool pool = poolRepository.findByUuidAndStatus(poolerBean.getPool().getUuid(), Status.ACTIVE);
+        Pool pool = poolRepository.findByUuidAndStatus(poolerBean.getPool().getUuid(), Status.SCHEDULED);
         User user = userRepository.findByUuid(poolerBean.getUser().getUuid());
 
         if (Objects.isNull(user)) {
@@ -62,7 +62,7 @@ public class PoolerServiceImpl implements PoolerService {
         try {
             pooler = Pooler.builder().pool(pool).user(user).paymentStatus(PaymentStatus.UNPAID).build();
             pooler = poolerRepository.saveAndFlush(pooler);
-            pool.setPoolerCount(pool.getPoolerCount() + 1);
+            pool.setPoolerCount(Objects.isNull(pool.getPoolerCount()) ? 1 : pool.getPoolerCount() + 1);
             poolRepository.saveAndFlush(pool);
             //TODO send notification
             return poolerMapper.fromSource(pooler);

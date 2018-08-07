@@ -54,7 +54,7 @@ public class PoolServiceImpl implements PoolService {
     @Override
     public List<PoolBean> findByUserUuid(String uuid) {
         try {
-            List<Pool> pools = poolRepository.findByUserUuid(uuid);
+            List<Pool> pools = poolRepository.findByUserUuidAndStatus(uuid, Status.SCHEDULED);
             return pools.stream().filter(p -> Objects.nonNull(p)).map(p -> poolMapper.fromSource(p)).collect(Collectors.toList());
         } catch (Exception ex) {
             log.error("Failed to fetch pools for user {} due to {}", uuid, ex);
@@ -76,18 +76,19 @@ public class PoolServiceImpl implements PoolService {
     @Transactional
     @Override
     public PoolBean schedulePool(PoolBean pool) {
-        List<Pool> pools = poolRepository.findByUserUuidAndStatus(pool.getUser().getUuid(), Status.ACTIVE);
+        List<Pool> pools = poolRepository.findByUserUuidAndStatus(pool.getUser().getUuid(), Status.SCHEDULED);
         if (!pools.isEmpty()) {
             throw new PoolServiceException("CONFLICT", "user.has.active.pool");
         }
 
-        pools = poolRepository.findByVehicleUuidAndStatus(pool.getVehicle().getUuid(), Status.ACTIVE);
+        pools = poolRepository.findByVehicleUuidAndStatus(pool.getVehicle().getUuid(), Status.SCHEDULED);
         if (!pools.isEmpty()) {
             throw new PoolServiceException("CONFLICT", "vehicle.has.active.pool");
         }
 
         try {
             Pool pool1 = poolMapper.toSource(pool);
+            pool1.setStatus(Status.SCHEDULED);
             pool1 = poolRepository.saveAndFlush(pool1);
             return poolMapper.fromSource(pool1);
         } catch (Exception ex) {
@@ -118,6 +119,10 @@ public class PoolServiceImpl implements PoolService {
 
         if (!poolBean.getUser().getUuid().equals(pool1.getUser().getUuid())) {
             throw new PoolServiceException("PRE_CONDITION_FAILED", "pool.user.different");
+        }
+
+        if(Status.CANCELLED.equals(pool1.getStatus()) ||  Status.COMPLETED.equals(pool1.getStatus())){
+            throw new PoolServiceException("PRE_CONDITION_FAILED", "pool.status.immutable");
         }
 
         try {

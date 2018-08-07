@@ -26,7 +26,7 @@ public class PoolMapper implements Mapper<Pool, PoolBean> {
 
     @Override
     public PoolBean fromSource(Pool pool) {
-        return Objects.isNull(pool) ? null : PoolBean.builder().uuid(pool.getUuid()).vehicle(vehicleMapper.fromSource(pool.getVehicle())).user(userMapper.fromSource(pool.getUser())).startTime(pool.getStartTime()).route(pool.getRoute()).build();
+        return Objects.isNull(pool) ? null : PoolBean.builder().uuid(pool.getUuid()).status(pool.getStatus().toString()).vehicle(vehicleMapper.fromSource(pool.getVehicle())).user(userMapper.fromSource(pool.getUser())).startTime(pool.getStartTime()).route(pool.getRoute()).build();
     }
 
     @Override

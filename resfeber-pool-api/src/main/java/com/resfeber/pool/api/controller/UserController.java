@@ -8,6 +8,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Component;
 import com.resfeber.pool.api.mapper.PoolWSMapper;
 import com.resfeber.pool.api.mapper.PoolerWSMapper;
 import com.resfeber.pool.api.mapper.UserWSMapper;
+import com.resfeber.pool.api.util.UserContext;
 import com.resfeber.pool.api.ws.PoolWS;
 import com.resfeber.pool.api.ws.PoolerWS;
 import com.resfeber.pool.api.ws.ResponseWS;
@@ -52,6 +54,25 @@ public class UserController {
     private PoolerService poolerService;
     @Autowired
     private PoolerWSMapper poolerWSMapper;
+    @Autowired
+    private UserContext userContext;
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public Response getLoggedInUserDetail() {
+        UserBean userBean = userContext.getCurrentUser().orElse(null);
+        return Response.status(202).entity(ResponseWS.builder().code(202).message("ACCEPTED").data(userWSMapper.fromSource(userBean)).build()).build();
+    }
+
+    @GET
+    @Path("{userId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public Response findByUuid(@PathParam("userId") String userId) {
+        UserBean userBean = userService.findByUuid(userId);
+        return Response.status(202).entity(ResponseWS.builder().code(202).message("ACCEPTED").data(userWSMapper.fromSource(userBean)).build()).build();
+    }
 
     @ApiOperation(value = "Update user", response = ResponseWS.class)
     @ApiResponses(value = {
@@ -66,23 +87,25 @@ public class UserController {
     }
 
     @GET
-    @Path(("/{userId}/pools"))
+    @Path(("/pools"))
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response findPoolByUser(String userId) {
-        List<PoolBean> pools = poolService.findByUserUuid(userId);
+    public Response findPoolByUser() {
+        UserBean userBean = userContext.getCurrentUser().orElse(null);
+        List<PoolBean> pools = poolService.findByUserUuid(userBean.getUuid());
         List<PoolWS> poolWSList = pools.stream().filter(p -> Objects.nonNull(p)).map(p -> poolWSMapper.fromSource(p)).collect(Collectors.toList());
         return Response.status(200).entity(ResponseWS.builder().code(200).message("OK").data(poolWSList)).build();
     }
 
     @GET
-    @Path(("/{userId}/trips"))
+    @Path(("/trips"))
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response findTripsByUser(String userId) {
-        List<PoolerBean> pools = poolerService.findByUserUuid(userId);
+    public Response findTripsByUser() {
+        UserBean userBean = userContext.getCurrentUser().orElse(null);
+        List<PoolerBean> pools = poolerService.findByUserUuid(userBean.getUuid());
         List<PoolerWS> poolerWSList = pools.stream().filter(p -> Objects.nonNull(p)).map(p -> poolerWSMapper.fromSource(p)).collect(Collectors.toList());
-        return Response.status(200).entity(ResponseWS.builder().code(200).message("OK").data(poolerWSList)).build();
+        return Response.status(200).entity(ResponseWS.builder().code(200).message("OK").data(poolerWSList).build()).build();
     }
 
 }

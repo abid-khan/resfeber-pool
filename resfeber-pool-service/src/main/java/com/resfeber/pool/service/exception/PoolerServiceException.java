@@ -6,10 +6,10 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class PoolerServiceException extends   RuntimeException {
+public class PoolerServiceException extends RuntimeException {
     private String code;
 
-    public PoolerServiceException(String code,String message) {
+    public PoolerServiceException(String code, String message) {
         super(message);
         this.code = code;
     }

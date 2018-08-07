@@ -23,8 +23,8 @@ public class UserBean extends BaseBean {
     private String phone;
 
     @Builder
-    private UserBean(Long id, String uuid, String externalId, String email, String firstName, String lastName, String givenName, String profile, String avatar, Gender gender, String phone) {
-        super(id, uuid);
+    private UserBean(Long id, String uuid, String status, String externalId, String email, String firstName, String lastName, String givenName, String profile, String avatar, Gender gender, String phone) {
+        super(id, uuid, status);
         this.externalId = externalId;
         this.email = email;
         this.firstName = firstName;

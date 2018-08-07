@@ -12,4 +12,5 @@ import lombok.Setter;
 @AllArgsConstructor
 public class BaseWS {
     private String uuid;
+    private String status;
 }

@@ -1,5 +1,7 @@
 package com.resfeber.pool.service.mapper.pooler;
 
+import java.util.Objects;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +21,7 @@ public class PoolerMapper implements Mapper<Pooler, PoolerBean> {
 
     @Override
     public PoolerBean fromSource(Pooler pooler) {
-        return PoolerBean.builder().pool(poolMapper.fromSource(pooler.getPool())).user(userMapper.fromSource(pooler.getUser())).paymentStatus(pooler.getPaymentStatus()).build();
+        return Objects.isNull(pooler)? null : PoolerBean.builder().uuid(pooler.getUuid()).status(pooler.getStatus().toString()).pool(poolMapper.fromSource(pooler.getPool())).user(userMapper.fromSource(pooler.getUser())).paymentStatus(pooler.getPaymentStatus()).build();
     }
 
     @Override

@@ -16,7 +16,7 @@ public class VehicleWSMapper implements Mapper<VehicleBean, VehicleWS> {
 
     @Override
     public VehicleWS fromSource(VehicleBean vehicleBean) {
-        return Objects.isNull(vehicleBean) ? null : VehicleWS.builder().uuid(vehicleBean.getUuid()).number(vehicleBean.getNumber()).description(vehicleBean.getDescription()).brand(vehicleBean.getBrand()).type(vehicleBean.getType()).capacity(vehicleBean.getCapacity()).build();
+        return Objects.isNull(vehicleBean) ? null : VehicleWS.builder().uuid(vehicleBean.getUuid()).status(vehicleBean.getStatus()).number(vehicleBean.getNumber()).description(vehicleBean.getDescription()).brand(vehicleBean.getBrand()).type(vehicleBean.getType()).capacity(vehicleBean.getCapacity()).build();
     }
 
     @Override

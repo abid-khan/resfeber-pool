@@ -10,4 +10,5 @@ import lombok.Setter;
 public class BaseBean {
     public Long id;
     public String uuid;
+    public String status;
 }

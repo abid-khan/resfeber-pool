@@ -1,5 +1,7 @@
 package com.resfeber.pool.service.mapper.vehicle;
 
+import java.util.Objects;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,11 +21,11 @@ public class VehicleMapper implements Mapper<Vehicle, VehicleBean> {
 
     @Override
     public VehicleBean fromSource(Vehicle vehicle) {
-        return VehicleBean.builder().id(vehicle.getId()).uuid(vehicle.getUuid()).number(vehicle.getNumber()).brand(vehicle.getBrand()).capacity(vehicle.getCapacity()).description(vehicle.getDescription()).type(vehicle.getType()).build();
+        return Objects.isNull(vehicle) ? null : VehicleBean.builder().id(vehicle.getId()).uuid(vehicle.getUuid()).status(vehicle.getStatus().toString()).number(vehicle.getNumber()).brand(vehicle.getBrand()).capacity(vehicle.getCapacity()).description(vehicle.getDescription()).type(vehicle.getType()).build();
     }
 
     @Override
     public Vehicle toSource(VehicleBean vehicleBean) {
-        return Vehicle.builder().number(vehicleBean.getNumber()).brand(vehicleBean.getBrand()).description(vehicleBean.getDescription()).type(vehicleBean.getType()).capacity(vehicleBean.getCapacity()).user(userRepository.findByUuid(vehicleBean.getUser().getUuid())).build();
+        return Objects.isNull(vehicleBean) ? null : Vehicle.builder().number(vehicleBean.getNumber()).brand(vehicleBean.getBrand()).description(vehicleBean.getDescription()).type(vehicleBean.getType()).capacity(vehicleBean.getCapacity()).user(userRepository.findByUuid(vehicleBean.getUser().getUuid())).build();
     }
 }

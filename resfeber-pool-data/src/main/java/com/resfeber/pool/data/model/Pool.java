@@ -46,6 +46,6 @@ public class Pool extends AbstractAuditableEntity<User> {
     private Integer poolerCount;
 
     @OneToMany
-    @JoinTable(name = "poolers", joinColumns = {@JoinColumn(name = "pool")}, inverseJoinColumns = {@JoinColumn(name = "user")})
+    @JoinTable(name = "poolers", joinColumns = {@JoinColumn(name = "pool_id")}, inverseJoinColumns = {@JoinColumn(name = "user_id")})
     private Set<User> poolers;
 }

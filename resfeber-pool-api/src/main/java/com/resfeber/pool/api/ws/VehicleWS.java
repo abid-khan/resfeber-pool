@@ -30,8 +30,8 @@ public class VehicleWS extends BaseWS {
     private Integer capacity;
 
     @Builder
-    private VehicleWS(String uuid, String number, String brand, String description, VehicleType type, UserWS user, Integer capacity) {
-        super(uuid);
+    private VehicleWS(String uuid,String status,  String number, String brand, String description, VehicleType type, UserWS user, Integer capacity) {
+        super(uuid, status);
         this.number = number;
         this.brand = brand;
         this.description = description;

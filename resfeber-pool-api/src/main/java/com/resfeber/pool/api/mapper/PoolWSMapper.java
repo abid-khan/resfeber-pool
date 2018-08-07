@@ -18,11 +18,11 @@ public class PoolWSMapper implements Mapper<PoolBean, PoolWS> {
 
     @Override
     public PoolWS fromSource(PoolBean poolBean) {
-        return Objects.isNull(poolBean) ? null : PoolWS.builder().uuid(poolBean.getUuid()).user(userWSMapper.fromSource(poolBean.getUser())).vehicle(null).route(poolBean.getRoute()).startTime(poolBean.getStartTime()).poolerCount(poolBean.getPoolerCount()).build();
+        return Objects.isNull(poolBean) ? null : PoolWS.builder().uuid(poolBean.getUuid()).status(poolBean.getStatus()).user(userWSMapper.fromSource(poolBean.getUser())).vehicle(null).route(poolBean.getRoute()).startTime(poolBean.getStartTime()).poolerCount(poolBean.getPoolerCount()).build();
     }
 
     @Override
     public PoolBean toSource(PoolWS poolWS) {
-        return Objects.isNull(poolWS) ? null : PoolBean.builder().vehicle(vehicleWSMapper.toSource(poolWS.getVehicle())).user(userWSMapper.toSource(poolWS.getUser())).startTime(poolWS.getStartTime()).route(poolWS.getRoute()).build();
+        return Objects.isNull(poolWS) ? null : PoolBean.builder().uuid(poolWS.getStatus()).vehicle(vehicleWSMapper.toSource(poolWS.getVehicle())).user(userWSMapper.toSource(poolWS.getUser())).startTime(poolWS.getStartTime()).route(poolWS.getRoute()).build();
     }
 }

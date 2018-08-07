@@ -19,8 +19,8 @@ public class PoolBean extends BaseBean {
     private Set<UserBean> poolers;
 
     @Builder
-    private PoolBean(Long id, String uuid, UserBean user, VehicleBean vehicle, String route, Date startTime, Integer poolerCount, Set<UserBean> poolers) {
-        super(id, uuid);
+    private PoolBean(Long id, String uuid,String status, UserBean user, VehicleBean vehicle, String route, Date startTime, Integer poolerCount, Set<UserBean> poolers) {
+        super(id, uuid, status);
         this.user = user;
         this.vehicle = vehicle;
         this.route = route;

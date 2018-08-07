@@ -10,7 +10,7 @@ import com.resfeber.pool.service.bean.UserBean;
 public class UserMapper implements Mapper<User, UserBean> {
     @Override
     public UserBean fromSource(User user) {
-        return UserBean.builder().id(user.getId()).uuid(user.getUuid()).externalId(user.getExternalId()).email(user.getEmail()).firstName(user.getFirstName()).lastName(user.getLastName()).givenName(user.getGivenName()).profile(user.getProfile()).avatar(user.getAvatar()).gender(user.getGender()).phone(user.getPhone()).build();
+        return UserBean.builder().id(user.getId()).uuid(user.getUuid()).status(user.getStatus().toString()).externalId(user.getExternalId()).email(user.getEmail()).firstName(user.getFirstName()).lastName(user.getLastName()).givenName(user.getGivenName()).profile(user.getProfile()).avatar(user.getAvatar()).gender(user.getGender()).phone(user.getPhone()).build();
     }
 
     @Override

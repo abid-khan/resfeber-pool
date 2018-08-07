@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.resfeber.pool.core.type.Status;
+import com.resfeber.pool.data.model.User;
 import com.resfeber.pool.data.model.Vehicle;
 import com.resfeber.pool.data.repository.UserRepository;
 import com.resfeber.pool.data.repository.VehicleRepository;
@@ -32,6 +33,29 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Autowired
     private VehicleMapper vehicleMapper;
+
+    @Override
+    public VehicleBean findByUuid(String uuid) {
+        try {
+            Vehicle vehicle = vehicleRepository.findByUuid(uuid);
+            return vehicleMapper.fromSource(vehicle);
+        } catch (Exception ex) {
+            log.error("Failed to find  vehicle for uuid {} due to {}", uuid, ex);
+            throw new VehicleServiceException("Failed to find  vehicle", ex);
+        }
+    }
+
+    @Override
+    public VehicleBean findByUser(String userUuid) {
+        try {
+            User user = userRepository.findByUuid(userUuid);
+            Vehicle vehicle = vehicleRepository.findByUserAndStatus(user, Status.ACTIVE);
+            return vehicleMapper.fromSource(vehicle);
+        } catch (Exception ex) {
+            log.error("Failed to fetch vehicle for user {} due to {}", userUuid, ex);
+            throw new VehicleServiceException("Failed to fetch vehicle", ex);
+        }
+    }
 
     @Override
     public List<VehicleBean> findByStatus(Status status) {
@@ -56,7 +80,7 @@ public class VehicleServiceImpl implements VehicleService {
                 //TODO
             }
 
-            if(Objects.isNull(vehicle.getUser())){
+            if (Objects.isNull(vehicle.getUser())) {
                 throw new UserNotFoundException("NOT_FOUND", "add.phone.number");
             }
             vehicle = vehicleRepository.saveAndFlush(vehicle);
@@ -67,8 +91,16 @@ public class VehicleServiceImpl implements VehicleService {
         }
     }
 
+    @Transactional
     @Override
-    public void delete(VehicleBean pool) {
-
+    public void delete(VehicleBean vehicleBean) {
+        try {
+            Vehicle vehicle = vehicleRepository.findByUuid(vehicleBean.getUuid());
+            vehicle.setStatus(Status.DELETED);
+            vehicleRepository.saveAndFlush(vehicle);
+        } catch (Exception ex) {
+            log.error("Failed to delete Vehicle {} due to {}", vehicleBean, ex);
+            throw new VehicleServiceException("Failed to delete vehicle", ex);
+        }
     }
 }

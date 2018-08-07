@@ -59,6 +59,6 @@ public class User extends AbstractAuditableEntity<User> {
     private Set<Authorities> authorities;
 
     @OneToMany
-    @JoinTable(name = "poolers", joinColumns = {@JoinColumn(name = "user")}, inverseJoinColumns = {@JoinColumn(name = "pool")})
+    @JoinTable(name = "poolers", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "pool_id")})
     private Set<Pool> pools;
 }

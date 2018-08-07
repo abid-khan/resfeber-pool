@@ -12,7 +12,8 @@
 		<module>resfeber-pool-api</module>
 		<module>resfeber-pool-core</module>
         <module>resfeber-pool-autoconfigure</module>
-    </modules>
+		<module>resfeber-messaging</module>
+	</modules>
     <packaging>pom</packaging>
 
 	<name>resferber-pool</name>
@@ -32,6 +33,7 @@
 		<spock.version>1.1-groovy-2.4</spock.version>
 		<swagge-jersey2.version>1.5.20</swagge-jersey2.version>
 		<swagge-ui.version>3.17.1</swagge-ui.version>
+		<firebase.version>6.2.0</firebase.version>
 	</properties>
 
 	<dependencies>
@@ -85,6 +87,11 @@
 			<groupId>org.webjars</groupId>
 			<artifactId>swagger-ui</artifactId>
 			<version>${swagge-ui.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.firebase</groupId>
+			<artifactId>firebase-admin</artifactId>
+			<version>${firebase.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.h2database</groupId>

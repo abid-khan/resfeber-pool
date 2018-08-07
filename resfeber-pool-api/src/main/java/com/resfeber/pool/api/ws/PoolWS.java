@@ -23,8 +23,8 @@ public class PoolWS extends BaseWS {
     private Set<UserWS> poolers;
 
     @Builder
-    private PoolWS(String uuid, UserWS user, VehicleWS vehicle, String route, Date startTime, Integer poolerCount, Set<UserWS> poolers) {
-        super(uuid);
+    private PoolWS(String uuid, String status, UserWS user, VehicleWS vehicle, String route, Date startTime, Integer poolerCount, Set<UserWS> poolers) {
+        super(uuid, status);
         this.user = user;
         this.vehicle = vehicle;
         this.route = route;

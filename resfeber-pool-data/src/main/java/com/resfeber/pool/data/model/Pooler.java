@@ -3,7 +3,7 @@ package com.resfeber.pool.data.model;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -23,10 +23,13 @@ import com.resfeber.pool.core.type.PaymentStatus;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Pooler extends AbstractAuditableEntity<User> {
-    @ManyToOne(fetch = FetchType.EAGER)
+
+    @JoinColumn(name = "pool_id", nullable = false)
+    @ManyToOne
     private Pool pool;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id",  nullable = false)
+    @ManyToOne
     private User user;
 
     @Enumerated(EnumType.STRING)

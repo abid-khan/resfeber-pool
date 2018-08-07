@@ -30,7 +30,7 @@ import com.resfeber.pool.core.type.Status;
 @Getter(AccessLevel.PUBLIC)
 @SuppressWarnings("serial")
 @MappedSuperclass
-@EntityListeners(AuditingEntityListener.class)
+@EntityListeners({AuditingEntityListener.class})
 public class AbstractAuditableEntity<U> extends AbstractPersistable<Long> {
     @Version
     @Column(name = "version")

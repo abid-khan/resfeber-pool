@@ -1,5 +1,6 @@
 package com.resfeber.pool.api.mapper;
 
+import java.text.ParseException;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +21,11 @@ public class PoolerWSMapper implements Mapper<PoolerBean, PoolerWS> {
 
     @Override
     public PoolerWS fromSource(PoolerBean poolerBean) {
-        return Objects.isNull(poolerBean) ? null : PoolerWS.builder().pool((poolWSMapper.fromSource(poolerBean.getPool()))).user(userWSMapper.fromSource(poolerBean.getUser())).paymentStatus(poolerBean.getPaymentStatus()).build();
+        return Objects.isNull(poolerBean) ? null : PoolerWS.builder().uuid(poolerBean.getUuid()).status(poolerBean.getStatus()).pool((poolWSMapper.fromSource(poolerBean.getPool()))).user(userWSMapper.fromSource(poolerBean.getUser())).paymentStatus(poolerBean.getPaymentStatus()).build();
     }
 
     @Override
-    public PoolerBean toSource(PoolerWS poolerWS) {
-        return Objects.isNull(poolerWS) ? null : PoolerBean.builder().pool(poolWSMapper.toSource(poolerWS.getPool())).user(userWSMapper.toSource(poolerWS.getUser())).build();
+    public PoolerBean toSource(PoolerWS poolerWS) throws ParseException {
+        return Objects.isNull(poolerWS) ? null : PoolerBean.builder().uuid(poolerWS.getUuid()).pool(poolWSMapper.toSource(poolerWS.getPool())).user(userWSMapper.toSource(poolerWS.getUser())).build();
     }
 }

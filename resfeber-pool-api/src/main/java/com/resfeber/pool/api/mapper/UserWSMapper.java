@@ -12,7 +12,7 @@ import com.resfeber.pool.service.bean.UserBean;
 public class UserWSMapper implements Mapper<UserBean, UserWS> {
     @Override
     public UserWS fromSource(UserBean userBean) {
-        return Objects.isNull(userBean) ? null : UserWS.builder().uuid(userBean.getUuid()).firstName(userBean.getFirstName()).lastName(userBean.getLastName()).phone(userBean.getPhone()).build();
+        return Objects.isNull(userBean) ? null : UserWS.builder().uuid(userBean.getUuid()).status(userBean.getStatus()).firstName(userBean.getFirstName()).lastName(userBean.getLastName()).phone(userBean.getPhone()).email(userBean.getEmail()).build();
     }
 
     @Override

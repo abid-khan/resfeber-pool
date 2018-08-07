@@ -23,8 +23,8 @@ public class UserWS extends BaseWS {
     private String phone;
 
     @Builder
-    private UserWS(String uuid, String externalId, String email, String firstName, String lastName, String givenName, String profile, String avatar, Gender gender, String phone) {
-        super(uuid);
+    private UserWS(String uuid, String status, String externalId, String email, String firstName, String lastName, String givenName, String profile, String avatar, Gender gender, String phone) {
+        super(uuid, status);
         this.externalId = externalId;
         this.email = email;
         this.firstName = firstName;
